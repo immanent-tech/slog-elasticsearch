@@ -1,4 +1,4 @@
-package sloglogstash
+package slogelasticsearch
 
 import (
 	"log/slog"

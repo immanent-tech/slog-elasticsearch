@@ -1,4 +1,6 @@
-package sloglogstash
+package slogelasticsearch
 
-const name = "samber/slog-logstash"
-const version = "VERSION" // replaced by .github/workflows/release.yml
+const (
+	name    = "immanent-tech/slog-elasticsearch"
+	version = "VERSION" // replaced by .github/workflows/release.yml
+)
