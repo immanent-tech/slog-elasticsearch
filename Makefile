@@ -5,25 +5,24 @@ build:
 test:
 	go test -race -v ./...
 watch-test:
-	reflex -t 50ms -s -- sh -c 'gotest -race -v ./...'
+	go tool reflex -t 50ms -s -- sh -c 'go tool gotest -race -v ./...'
 
 bench:
 	go test -benchmem -count 3 -bench ./...
 watch-bench:
-	reflex -t 50ms -s -- sh -c 'go test -benchmem -count 3 -bench ./...'
+	go tool reflex -t 50ms -s -- sh -c 'go test -benchmem -count 3 -bench ./...'
 
 coverage:
 	go test -v -coverprofile=cover.out -covermode=atomic ./...
 	go tool cover -html=cover.out -o cover.html
 
 tools:
-	go install github.com/cespare/reflex@latest
-	go install github.com/rakyll/gotest@latest
-	go install github.com/psampaz/go-mod-outdated@latest
-	go install github.com/jondot/goweight@latest
-	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-	go get -t -u golang.org/x/tools/cmd/cover
-	go install github.com/sonatype-nexus-community/nancy@latest
+	go get -tool github.com/cespare/reflex@latest
+	go get -tool github.com/rakyll/gotest@latest
+	go get -tool github.com/psampaz/go-mod-outdated@latest
+	go get -tool github.com/jondot/goweight@latest
+	go get -tool golang.org/x/tools/cmd/cover
+	go get -tool github.com/sonatype-nexus-community/nancy@latest
 	go mod tidy
 
 lint:
@@ -32,10 +31,10 @@ lint-fix:
 	golangci-lint run --timeout 60s --max-same-issues 50 --fix ./...
 
 audit:
-	go list -json -m all | nancy sleuth
+	go list -json -m all | go tool nancy sleuth
 
 outdated:
-	go list -u -m -json all | go-mod-outdated -update -direct
+	go list -u -m -json all | go tool go-mod-outdated -update -direct
 
 weight:
-	goweight
+	go tool goweight
