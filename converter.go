@@ -2,13 +2,16 @@ package slogelasticsearch
 
 import (
 	"log/slog"
+	"os"
 
 	slogcommon "github.com/samber/slog-common"
 )
 
-var SourceKey = "source"
-var ContextKey = "extra"
-var ErrorKeys = []string{"error", "err"}
+var (
+	SourceKey  = "source"
+	ContextKey = "extra"
+	ErrorKeys  = []string{"error", "err"}
+)
 
 type Converter func(addSource bool, replaceAttr func(groups []string, a slog.Attr) slog.Attr, loggerAttr []slog.Attr, groups []string, record *slog.Record) map[string]any
 
@@ -25,11 +28,20 @@ func DefaultConverter(addSource bool, replaceAttr func(groups []string, a slog.A
 
 	// handler formatter
 	log := map[string]any{
-		"@timestamp":     record.Time.UTC(),
-		"logger.name":    name,
-		"logger.version": version,
-		"level":          record.Level.String(),
-		"message":        record.Message,
+		"@timestamp": record.Time.UTC(),
+		"logger": map[string]any{
+			"name":    name,
+			"version": version,
+		},
+		"level":   record.Level.String(),
+		"message": record.Message,
+	}
+
+	hostname, err := os.Hostname()
+	if err == nil {
+		log["host"] = map[string]any{
+			"name": hostname,
+		}
 	}
 
 	extra := slogcommon.AttrsToMap(attrs...)
