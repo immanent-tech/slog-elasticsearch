@@ -13,6 +13,7 @@ import (
 	slogcommon "github.com/samber/slog-common"
 )
 
+// Option defines the options for the Elasticsearch slog.Handler.
 type Option struct {
 	// Log level (default: debug)
 	Level slog.Leveler
@@ -40,6 +41,7 @@ type Option struct {
 	ReplaceAttr func(groups []string, a slog.Attr) slog.Attr
 }
 
+// NewElasticsearchHandler creates a new slog.Handler that sends log messages to Elasticsearch.
 func (o Option) NewElasticsearchHandler(ctx context.Context) slog.Handler {
 	if o.Level == nil {
 		o.Level = slog.LevelDebug
@@ -83,8 +85,11 @@ func (o Option) NewElasticsearchHandler(ctx context.Context) slog.Handler {
 	}
 
 	go func() {
-		defer indexer.Close(ctx)
 		<-ctx.Done()
+		err := indexer.Close(ctx)
+		if err != nil {
+			panic(fmt.Sprintf("error closing the indexer: %v", err))
+		}
 	}()
 
 	return &ElasticsearchHandler{
