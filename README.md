@@ -1,107 +1,107 @@
-
-# slog: Logstash handler
-
-[![tag](https://img.shields.io/github/tag/samber/slog-logstash.svg)](https://github.com/samber/slog-logstash/releases)
-![Go Version](https://img.shields.io/badge/Go-%3E%3D%201.21-%23007d9c)
-[![GoDoc](https://godoc.org/github.com/samber/slog-logstash?status.svg)](https://pkg.go.dev/github.com/samber/slog-logstash)
-![Build Status](https://github.com/samber/slog-logstash/actions/workflows/test.yml/badge.svg)
-[![Go report](https://goreportcard.com/badge/github.com/samber/slog-logstash)](https://goreportcard.com/report/github.com/samber/slog-logstash)
-[![Coverage](https://img.shields.io/codecov/c/github/samber/slog-logstash)](https://codecov.io/gh/samber/slog-logstash)
-[![Contributors](https://img.shields.io/github/contributors/samber/slog-logstash)](https://github.com/samber/slog-logstash/graphs/contributors)
-[![License](https://img.shields.io/github/license/samber/slog-logstash)](./LICENSE)
-
-A [Logstash](https://www.elastic.co/logstash/) Handler for [slog](https://pkg.go.dev/log/slog) Go library.
+<h1 align="center">
+  <a href="https://github.com/immanent-tech/slog-elasticsearch">
+    <!-- Please provide path to your logo here -->
+    <!-- <img src="docs/images/logo.svg" alt="Logo" width="100" height="100"> -->
+  </a>
+</h1>
 
 <div align="center">
-  <hr>
-  <sup><b>Sponsored by:</b></sup>
-  <br>
-  <a href="https://www.dash0.com?utm_campaign=148395251-samber%20github%20sponsorship&utm_source=github&utm_medium=sponsorship&utm_content=samber">
-    <div>
-      <img src="https://github.com/user-attachments/assets/b1f2e876-0954-4dc3-824d-935d29ba8f3f" width="200" alt="Dash0">
-    </div>
-    <div>
-      100% OpenTelemetry-native observability platform<br>Simple to use, built on open standards, and designed for full cost control
-    </div>
-  </a>
-  <hr>
+  slog-elasticsearch
+  <br />
+  <br />
+  <br />
+  <a href="https://github.com/immanent-tech/slog-elasticsearch/issues/new?assignees=&labels=bug&template=01_BUG_REPORT.md&title=bug%3A+">Report a Bug</a>
+  ·
+  <a href="https://github.com/immanent-tech/slog-elasticsearch/issues/new?assignees=&labels=enhancement&template=02_FEATURE_REQUEST.md&title=feat%3A+">Request a Feature</a>
+  .
+  <a href="https://github.com/immanent-tech/slog-elasticsearch/issues/new?assignees=&labels=question&template=04_SUPPORT_QUESTION.md&title=support%3A+">Ask a Question</a>
 </div>
 
-**See also:**
+<div align="center">
+<br />
 
-- [slog-multi](https://github.com/samber/slog-multi): `slog.Handler` chaining, fanout, routing, failover, load balancing...
-- [slog-formatter](https://github.com/samber/slog-formatter): `slog` attribute formatting
-- [slog-sampling](https://github.com/samber/slog-sampling): `slog` sampling policy
-- [slog-mock](https://github.com/samber/slog-mock): `slog.Handler` for test purposes
+[![Project license](https://img.shields.io/github/license/immanent-tech/slog-elasticsearch.svg?style=flat-square)](LICENSE)
 
-**HTTP middlewares:**
+[![Pull Requests welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg?style=flat-square)](https://github.com/immanent-tech/slog-elasticsearch/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
+[![code with love by immanent-tech](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-immanent-tech-ff1414.svg?style=flat-square)](https://github.com/immanent-tech)
 
-- [slog-gin](https://github.com/samber/slog-gin): Gin middleware for `slog` logger
-- [slog-echo](https://github.com/samber/slog-echo): Echo middleware for `slog` logger
-- [slog-fiber](https://github.com/samber/slog-fiber): Fiber middleware for `slog` logger
-- [slog-chi](https://github.com/samber/slog-chi): Chi middleware for `slog` logger
-- [slog-http](https://github.com/samber/slog-http): `net/http` middleware for `slog` logger
+</div>
 
-**Loggers:**
+<details open="open">
+<summary>Table of Contents</summary>
 
-- [slog-zap](https://github.com/samber/slog-zap): A `slog` handler for `Zap`
-- [slog-zerolog](https://github.com/samber/slog-zerolog): A `slog` handler for `Zerolog`
-- [slog-logrus](https://github.com/samber/slog-logrus): A `slog` handler for `Logrus`
+- [About](#about)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+  - [Handler options](#handler-options)
+  - [Example](#example)
+- [Roadmap](#roadmap)
+- [Support](#support)
+- [Project assistance](#project-assistance)
+- [Contributing](#contributing)
+- [Authors \& contributors](#authors--contributors)
+- [Security](#security)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
 
-**Log sinks:**
+</details>
 
-- [slog-datadog](https://github.com/samber/slog-datadog): A `slog` handler for `Datadog`
-- [slog-betterstack](https://github.com/samber/slog-betterstack): A `slog` handler for `Betterstack`
-- [slog-rollbar](https://github.com/samber/slog-rollbar): A `slog` handler for `Rollbar`
-- [slog-loki](https://github.com/samber/slog-loki): A `slog` handler for `Loki`
-- [slog-sentry](https://github.com/samber/slog-sentry): A `slog` handler for `Sentry`
-- [slog-syslog](https://github.com/samber/slog-syslog): A `slog` handler for `Syslog`
-- [slog-logstash](https://github.com/samber/slog-logstash): A `slog` handler for `Logstash`
-- [slog-fluentd](https://github.com/samber/slog-fluentd): A `slog` handler for `Fluentd`
-- [slog-graylog](https://github.com/samber/slog-graylog): A `slog` handler for `Graylog`
-- [slog-quickwit](https://github.com/samber/slog-quickwit): A `slog` handler for `Quickwit`
-- [slog-slack](https://github.com/samber/slog-slack): A `slog` handler for `Slack`
-- [slog-telegram](https://github.com/samber/slog-telegram): A `slog` handler for `Telegram`
-- [slog-mattermost](https://github.com/samber/slog-mattermost): A `slog` handler for `Mattermost`
-- [slog-microsoft-teams](https://github.com/samber/slog-microsoft-teams): A `slog` handler for `Microsoft Teams`
-- [slog-webhook](https://github.com/samber/slog-webhook): A `slog` handler for `Webhook`
-- [slog-kafka](https://github.com/samber/slog-kafka): A `slog` handler for `Kafka`
-- [slog-nats](https://github.com/samber/slog-nats): A `slog` handler for `NATS`
-- [slog-parquet](https://github.com/samber/slog-parquet): A `slog` handler for `Parquet` + `Object Storage`
-- [slog-channel](https://github.com/samber/slog-channel): A `slog` handler for Go channels
+---
 
-## 🚀 Install
+## About
 
-```sh
-go get github.com/samber/slog-logstash/v2
+An [slog](https://pkg.go.dev/log/slog) handler for logging to [Elasticsearch](https://elastic.co/elasticsearch).
+
+Uses the the official [go-elasticsearch](https://github.com/elastic/go-elasticsearch) package under the hood. In
+particular, it makes use of the bulk indexer helper provided in that package. Where appropriate, options for tuning the
+bulk indexer are exposed by the handler.
+
+## Getting Started
+
+### Prerequisites
+
+- Elasticsearch up and running.
+- An index (or ideally, a [logs data
+  stream](https://www.elastic.co/docs/manage-data/data-store/data-streams/logs-data-stream) created for the logs in
+  Elasticsearch.
+
+### Installation
+
+```shell
+go get github.com/immanent-tech/slog-elasticsearch/v2
 ```
 
-**Compatibility**: go >= 1.21
+## Usage
 
-No breaking changes will be made to exported APIs before v3.0.0.
-
-## 💡 Usage
-
-GoDoc: [https://pkg.go.dev/github.com/samber/slog-logstash/v2](https://pkg.go.dev/github.com/samber/slog-logstash/v2)
 
 ### Handler options
 
 ```go
 type Option struct {
-	// log level (default: debug)
+	// Log level (default: debug)
 	Level slog.Leveler
 
-	// connection to logstash
-	Conn net.Conn
+	// Connection to Elasticsearch
+	Conn *elasticsearch.Client
+	// Index/alias to use for logging.
+	Index string
+	// Optional: The number of workers. Defaults to runtime.NumCPU().
+	Numworkers int
+	// Optional: The flush threshold in bytes. Defaults to 5MB.
+	FlushBytes int
+	// Optional: The flush threshold as duration. Defaults to 30sec.
+	FlushInterval time.Duration
 
-	// optional: customize json payload builder
+	// Optional: customize json payload builder
 	Converter Converter
-	// optional: custom marshaler
+	// Optional: custom marshaler
 	Marshaler func(v any) ([]byte, error)
-	// optional: fetch attributes from context
+	// Optional: fetch attributes from context
 	AttrFromContext []func(ctx context.Context) []slog.Attr
 
-	// optional: see slog.HandlerOptions
+	// Optional: see slog.HandlerOptions
 	AddSource   bool
 	ReplaceAttr func(groups []string, a slog.Attr) slog.Attr
 }
@@ -112,155 +112,113 @@ Attributes will be injected in log payload.
 Other global parameters:
 
 ```go
-sloglogstash.SourceKey = "source"
-sloglogstash.ContextKey = "extra"
-sloglogstash.ErrorKeys = []string{"error", "err"}
+slogelasticsearch.SourceKey = "source"
+slogelasticsearch.ContextKey = "extra"
+slogelasticsearch.ErrorKeys = []string{"error", "err"}
 ```
 
 ### Example
 
 ```go
+package main
+
 import (
-    pool "github.com/samber/go-tcp-pool"
-    sloglogstash "github.com/samber/slog-logstash/v2"
-    "log/slog"
+	"fmt"
+	"log"
+	"log/slog"
+	"time"
+
+	"github.com/elastic/go-elasticsearch/v9"
+	slogelasticsearch "github.com/immanent-tech/slog-elasticsearch/v2"
 )
 
 func main() {
-    // ncat -l 9999 -k
-    conn, err := pool.Dial("tcp", "localhost:9999")
-    if err != nil {
-        log.Fatal(err)
-    }
+	// Create the Elasticsearch client
+	//
+	es, err := elasticsearch.NewDefaultClient()
+	if err != nil {
+		log.Fatalf("Error creating the client: %s", err)
+	}
 
-    logger := slog.New(sloglogstash.Option{Level: slog.LevelDebug, Conn: conn}.NewLogstashHandler())
-    logger = logger.
-        With("environment", "dev").
-        With("release", "v1.0.0")
+	// Create a logger using the slog-elasticsearch handler.
+	//
+	logger := slog.New(slogelasticsearch.Option{
+		Level: slog.LevelDebug,
+		Conn:  es,
+		Index: "test-logs",
+	}.NewElasticsearchHandler(context.Background()))
 
-    // log error
-    logger.
-        With("category", "sql").
-        With("query.statement", "SELECT COUNT(*) FROM users;").
-        With("query.duration", 1*time.Second).
-        With("error", fmt.Errorf("could not count users")).
-        Error("caramba!")
+	// Use the logger.
+	//
+	logger = logger.With("release", "v1.0.0")
 
-    // log user signup
-    logger.
-        With(
-            slog.Group("user",
-                slog.String("id", "user-123"),
-                slog.Time("created_at", time.Now()),
-            ),
-        ).
-        Info("user registration")
+	logger.
+		With(
+			slog.Group("user",
+				slog.String("id", "user-123"),
+				slog.Time("created_at", time.Now().AddDate(0, 0, -1)),
+			),
+		).
+		With("environment", "dev").
+		With("error", fmt.Errorf("an error")).
+		Error("A message")
 }
 ```
+## Roadmap
 
-Output:
+See the [open issues](https://github.com/immanent-tech/slog-elasticsearch/issues) for a list of proposed features (and
+known issues).
 
-```json
-{
-    "@timestamp":"2023-04-10T14:00:0.000000+00:00",
-    "level":"ERROR",
-    "message":"caramba!",
-    "error":{
-        "error":"could not count users",
-        "kind":"*errors.errorString",
-        "stack":null
-    },
-    "extra":{
-        "environment":"dev",
-        "release":"v1.0.0",
-        "category":"sql",
-        "query.statement":"SELECT COUNT(*) FROM users;",
-        "query.duration": "1s"
-    }
-}
+- [Top Feature Requests](https://github.com/immanent-tech/slog-elasticsearch/issues?q=label%3Aenhancement+is%3Aopen+sort%3Areactions-%2B1-desc) (Add your votes using the 👍 reaction)
+- [Top Bugs](https://github.com/immanent-tech/slog-elasticsearch/issues?q=is%3Aissue+is%3Aopen+label%3Abug+sort%3Areactions-%2B1-desc) (Add your votes using the 👍 reaction)
+- [Newest Bugs](https://github.com/immanent-tech/slog-elasticsearch/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
 
+## Support
 
-{
-    "@timestamp":"2023-04-10T14:00:0.000000+00:00",
-    "level":"INFO",
-    "message":"user registration",
-    "error":null,
-    "extra":{
-        "environment":"dev",
-        "release":"v1.0.0",
-        "user":{
-            "id":"user-123",
-            "created_at":"2023-04-10T14:00:0.000000+00:00"
-        }
-    }
-}
-```
+Reach out to the maintainer at one of the following places:
 
-### Tracing
+- [GitHub issues](https://github.com/immanent-tech/slog-elasticsearch/issues/new?assignees=&labels=question&template=04_SUPPORT_QUESTION.md&title=support%3A+)
 
-Import the samber/slog-otel library.
+## Project assistance
 
-```go
-import (
-	sloglogstash "github.com/samber/slog-logstash"
-	slogotel "github.com/samber/slog-otel"
-	"go.opentelemetry.io/otel/sdk/trace"
-)
+If you want to say **thank you** or/and support active development of slog-elasticsearch:
 
-func main() {
-	tp := trace.NewTracerProvider(
-		trace.WithSampler(trace.AlwaysSample()),
-	)
-	tracer := tp.Tracer("hello/world")
+- Add a [GitHub Star](https://github.com/immanent-tech/slog-elasticsearch) to the project.
+- Post on social media about slog-elasticsearch.
+- Write interesting articles about the project on [Dev.to](https://dev.to/), [Medium](https://medium.com/) or your
+  personal blog.
 
-	ctx, span := tracer.Start(context.Background(), "foo")
-	defer span.End()
+Together, we can make slog-elasticsearch **better**!
 
-	span.AddEvent("bar")
+## Contributing
 
-	logger := slog.New(
-		sloglogstash.Option{
-			// ...
-			AttrFromContext: []func(ctx context.Context) []slog.Attr{
-				slogotel.ExtractOtelAttrFromContext([]string{"tracing"}, "trace_id", "span_id"),
-			},
-		}.NewLogstashHandler(),
-	)
+First off, thanks for taking the time to contribute! Contributions are what make the open-source community such an
+amazing place to learn, inspire, and create. Any contributions you make will benefit everybody else and are **greatly
+appreciated**.
 
-	logger.ErrorContext(ctx, "a message")
-}
-```
+Please read [our contribution guidelines](docs/CONTRIBUTING.md), and thank you for being involved!
 
-## 🤝 Contributing
+## Authors & contributors
 
-- Ping me on twitter [@samuelberthe](https://twitter.com/samuelberthe) (DMs, mentions, whatever :))
-- Fork the [project](https://github.com/samber/slog-logstash)
-- Fix [open issues](https://github.com/samber/slog-logstash/issues) or request new features
+The original setup of this repository is by [joshuar](https://github.com/joshuar).
 
-Don't hesitate ;)
+For a full list of all authors and contributors, see [the contributors page](https://github.com/immanent-tech/slog-elasticsearch/contributors).
 
-```bash
-# Install some dev dependencies
-make tools
+## Security
 
-# Run tests
-make test
-# or
-make watch-test
-```
+slog-elasticsearch follows good practices of security, but 100% security cannot be assured.
+slog-elasticsearch is provided **"as is"** without any **warranty**. Use at your own risk.
 
-## 👤 Contributors
+_For more information and to report security issues, please refer to our [security documentation](docs/SECURITY.md)._
 
-![Contributors](https://contrib.rocks/image?repo=samber/slog-logstash)
+## License
 
-## 💫 Show your support
+This project is licensed under the **MIT license**.
 
-Give a ⭐️ if this project helped you!
+See [LICENSE](LICENSE) for more information.
 
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/samber?style=for-the-badge)](https://github.com/sponsors/samber)
+## Acknowledgements
 
-## 📝 License
-
-Copyright © 2023 [Samuel Berthe](https://github.com/samber).
-
-This project is [MIT](./LICENSE) licensed.
+slog-elasticsearch was original forked from and based on the code in
+[slog-logstash](https://github.com/samber/slog-logstash). Many thanks go to the authors and contributors of that project
+for a great basis for slog-elasticsearch.
