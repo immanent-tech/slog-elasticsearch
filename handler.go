@@ -52,8 +52,8 @@ func (o Option) NewElasticsearchHandler(ctx context.Context) slog.Handler {
 	}
 
 	config := esutil.BulkIndexerConfig{
-		Index:  o.Index, // The default index name
-		Client: o.Conn,  // The Elasticsearch client
+		Index:  o.Index,
+		Client: o.Conn, // The Elasticsearch client
 	}
 	// Set optional parameters if set.
 	if o.Numworkers != 0 {
@@ -122,21 +122,19 @@ func (h *ElasticsearchHandler) Handle(ctx context.Context, record slog.Record) e
 		return fmt.Errorf("unable to send log message: %w", err)
 	}
 
-	go func() {
-		err = h.indexer.Add(
-			context.Background(),
-			esutil.BulkIndexerItem{
-				Action: "index",
-				// Body is an `io.Reader` with the payload
-				Body: bytes.NewReader(data),
-			},
+	err = h.indexer.Add(
+		ctx,
+		esutil.BulkIndexerItem{
+			Action: "index",
+			// Body is an `io.Reader` with the payload
+			Body: bytes.NewReader(data),
+		},
+	)
+	if err != nil {
+		slog.ErrorContext(ctx, "Unexpected error.",
+			slog.Any("error", err),
 		)
-		if err != nil {
-			slog.Error("Unexpected error.",
-				slog.Any("error", err),
-			)
-		}
-	}()
+	}
 
 	return nil
 }
