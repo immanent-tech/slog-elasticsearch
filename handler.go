@@ -114,7 +114,7 @@ func (h *ElasticsearchHandler) Handle(ctx context.Context, record slog.Record) e
 
 	data, err := h.option.Marshaler(message)
 	if err != nil {
-		return err
+		return fmt.Errorf("unable to send log message: %w", err)
 	}
 
 	go func() {
@@ -133,7 +133,7 @@ func (h *ElasticsearchHandler) Handle(ctx context.Context, record slog.Record) e
 		}
 	}()
 
-	return fmt.Errorf("unable to send log message: %w", err)
+	return nil
 }
 
 func (h *ElasticsearchHandler) WithAttrs(attrs []slog.Attr) slog.Handler {
