@@ -18,7 +18,7 @@ require (
 )
 
 require (
-	github.com/elastic/go-elasticsearch/v9 v9.1.0
+	github.com/elastic/go-elasticsearch/v9 v9.2.0
 	github.com/samber/lo v1.51.0 // indirect
 	golang.org/x/text v0.27.0 // indirect
 )
