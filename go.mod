@@ -3,7 +3,7 @@ module github.com/immanent-tech/slog-elasticsearch/v2
 go 1.24.5
 
 require (
-	github.com/samber/slog-common v0.19.0
+	github.com/samber/slog-common v0.20.0
 	go.uber.org/goleak v1.3.0
 )
 
@@ -19,6 +19,6 @@ require (
 
 require (
 	github.com/elastic/go-elasticsearch/v9 v9.1.0
-	github.com/samber/lo v1.51.0 // indirect
+	github.com/samber/lo v1.52.0 // indirect
 	golang.org/x/text v0.27.0 // indirect
 )
